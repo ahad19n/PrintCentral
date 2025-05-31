@@ -19,3 +19,9 @@ services:
       MONGO_INITDB_ROOT_USERNAME_FILE: /run/secrets/mongo-root-username
       MONGO_INITDB_ROOT_PASSWORD_FILE: /run/secrets/mongo-root-password
 
+  wagw:
+    build: ./wagw
+    restart: unless-stopped
+    volumes:
+      - ./volumes/wagw/wwebjs_auth:/app/.wwebjs_auth
+      - ./volumes/wagw/wwebjs_cache:/app/.wwebjs_cache
