@@ -3,6 +3,8 @@ secrets:
     file: ./secrets/mongo-root-username
   mongo-root-password:
     file: secrets/mongo-root-password
+  mongo-connection-string:
+    file: secrets/mongo-connection-string
 
 services:
   mongo:
@@ -25,3 +27,13 @@ services:
     volumes:
       - ./volumes/wagw/wwebjs_auth:/app/.wwebjs_auth
       - ./volumes/wagw/wwebjs_cache:/app/.wwebjs_cache
+
+  svalbard:
+    build: ./svalbard
+    restart: unless-stopped
+    secrets:
+      - mongo-connection-string
+    volumes:
+      - ./volumes/svalbard:/data
+    environment:
+      - MONGO_CONNECTION_STRING_FILE: /run/secrets/mongo-connection-string
